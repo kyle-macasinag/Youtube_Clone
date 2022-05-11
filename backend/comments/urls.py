@@ -1,7 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('<pk>/', views.get_all_comments),
+    path('<vid_id>/', views.get_all_comments),
     path('', views.add_comment),
+    path('<pk>/update/', views.update_comment)
 ]
