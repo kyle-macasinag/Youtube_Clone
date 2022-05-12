@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import CommentSerializer, Comments, Reply
-from .models import Comments, Reply
+from .serializers import CommentSerializer, Comments
+from .models import Comments
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
@@ -26,7 +26,9 @@ def add_comment(request):
 @permission_classes([IsAuthenticated])
 def update_comment(request, pk):
     comment = get_object_or_404(Comments, pk=pk)
-    serializer = CommentSerializer(comment, data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save(user=request.user)
-    return Response(serializer.data)
+    if request.user == comment.user:
+        serializer = CommentSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
