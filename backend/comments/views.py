@@ -26,7 +26,9 @@ def add_comment(request):
 @permission_classes([IsAuthenticated])
 def update_comment(request, pk):
     comment = get_object_or_404(Comments, pk=pk)
-    serializer = CommentSerializer(comment, data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save(user=request.user)
-    return Response(serializer.data)
+    if request.user == comment.user:
+        serializer = CommentSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
