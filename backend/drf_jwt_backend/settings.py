@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'corsheaders',
     'cars.apps.CarsConfig',  # This app is for example use only
-    'comments.apps.CommentsConfig'
+    'comments.apps.CommentsConfig',
+    'reply.apps.ReplyConfig'
 ]
 
 MIDDLEWARE = [
