@@ -8,9 +8,16 @@ from .serializers import ReplySerializer
 # Create your views here.
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
-def get_replies(request, comment_id):
-    reply = Reply.objects.filter(comment= comment_id)
-    serializer = ReplySerializer(reply, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+def reply_details(request, comment_id):
+    if request.method == "GET":
+        reply = Reply.objects.filter(comment=comment_id)
+        serializer = ReplySerializer(reply, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == "POST":
+        serializer = ReplySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
