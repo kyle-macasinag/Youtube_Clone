@@ -1,6 +1,17 @@
 import React from "react";
-import {useState} from "react";
-import Button from "react-bootstrap/Button";
-import Collapse from "react-bootstrap/Collapse";
-import Card from "react-bootstrap/Card"
-import "./VideoPlayer.css";
+
+const VideoPlayer = (Videos) => {
+    return (
+        <div className="dataResults">
+            {Videos.map((value, index) => {
+                return (
+                    <div key={index}>
+                        <div>{value.id.videoId}</div>
+                        </div>
+                );
+            })}
+        </div>
+    );
+};
+
+export default VideoPlayer;
