@@ -1,6 +1,7 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import Searchbar from "./components/SearchBar/SearchBar";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
@@ -19,6 +20,10 @@ import PrivateRoute from "./utils/PrivateRoute";
 function App() {
   return (
     <div>
+      
+        <div>
+          <Searchbar />
+        </div>
       
     </div>
   );
