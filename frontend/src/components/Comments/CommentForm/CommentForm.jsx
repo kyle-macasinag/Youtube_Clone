@@ -14,7 +14,7 @@ let defaultData = {
 }
 
 const CommentForm = (props) => {
-    const [user, userToken] = useAuth();
+    const [user, token] = useAuth();
     const [commentData, handleChange, handleSubmit] = useCustomForm(
         defaultData,
         addNewComment
@@ -25,7 +25,7 @@ const CommentForm = (props) => {
         try{
             let results = await axios.post('http://127.0.0.1:8000/api/comments/', commentData, {
                 headers: {
-                    Authorization: "Bearer " + userToken
+                    Authorization: "Bearer " + token
                 }
             })
         nav("/")

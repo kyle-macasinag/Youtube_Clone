@@ -1,7 +1,6 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Searchbar from "./components/SearchBar/SearchBar";
 import React, {useState} from "react";
 
 // Pages Imports
@@ -13,6 +12,7 @@ import VideoPage from "./pages/VideoPage/VideoPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
+import SearchBar from "./components/SearchBar/SearchBar";
 import Footer from "./components/Footer/Footer";
 
 // Util Imports
@@ -31,6 +31,7 @@ function App() {
   return (
     <div>
       <Navbar />
+      <SearchBar />
       <Routes>
         <Route
           path="/"
