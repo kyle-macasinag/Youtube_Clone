@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Searchbar from "./components/SearchBar/SearchBar";
+import React, {useState} from "react";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
@@ -16,15 +17,34 @@ import Footer from "./components/Footer/Footer";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+import { useState } from "react";
 
 function App() {
+  const [searchParam, setSearchParam] = useState("")
+  const [videos, setVideos] = useState([])
+  const [relatedVids, setRelatedVids] = useState([])
+  const [videoId, setVideoId] = useState("")
+  const [vidDescription, setVidDescription] = useState("")
+  const [vidTitle, setVidTitle] = useState("")
+
+
+
   return (
     <div>
-      
-        <div>
-          <Searchbar />
-        </div>
-      
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
