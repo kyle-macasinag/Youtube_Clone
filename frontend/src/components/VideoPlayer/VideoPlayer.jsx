@@ -1,17 +1,15 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
-const VideoPlayer = (Videos) => {
+const VideoPlayer = (props) => {
+
+    const {videoId} = useParams()
+
     return (
-        <div className="dataResults">
-            {Videos.map((value, index) => {
-                return (
-                    <div key={index}>
-                        <div>{value.id.videoId}</div>
-                        </div>
-                );
-            })}
+        <div>
+            <iframe src={`https://www.youtube.com/embed/${videoId}`}></iframe>
         </div>
-    );
+    )
 };
 
 export default VideoPlayer;
