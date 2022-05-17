@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const Comment = (props) => {
 
-
-
     const [like, setLike] = useState('Like')
     const [dislike, setDislike] = useState('Dislike')
     const [likeTrue, setLikeTrue] = useState(false);

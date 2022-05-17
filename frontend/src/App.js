@@ -68,6 +68,7 @@ function App() {
       }
     })
     setVidChoice(vid)
+    getVideoComments(vid.id.videoId)
   }
 
   return (
@@ -84,7 +85,7 @@ function App() {
           }
         />
         <Route path="/search" element={<SearchPage videos={videos} selection={userChoice}/>} />
-        <Route path="/video" element={<VideoPage pickedVid={vidChoice}/>} />
+        <Route path="/video" element={<VideoPage pickedVid={vidChoice} comment={comments}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

@@ -14,6 +14,7 @@ const VideoPage = (props) => {
                 <VideoPlayer parentVid={props.pickedVid.id.videoId}/>
                 <p>{props.pickedVid.snippet.description}</p>
             </div>
+            <CommentList comments={props.comment}/>
         </div>
     )
 }

@@ -3,9 +3,9 @@ import Comment from '../Comment/Comment';
 
 const CommentList = (props) => {
 
-    useEffect(() => {
-        props.getVidComments(props.videoId)
-    }, [])
+    // useEffect(() => {
+    //     props.getVidComments(props.videoId)
+    // }, [])
 
     return (
         <div className='container'>
