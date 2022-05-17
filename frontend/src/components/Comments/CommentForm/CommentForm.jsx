@@ -46,4 +46,4 @@ const CommentForm = (props) => {
         </div>
     )
 }
-export default CommentForm
+export default CommentForm;

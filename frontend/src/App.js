@@ -25,17 +25,13 @@ function App() {
   const [searchParam, setSearchParam] = useState("")
   const [videos, setVideos] = useState([])
   const [relatedVids, setRelatedVids] = useState([])
-  const [videoId, setVideoId] = useState("")
-  const [vidDescription, setVidDescription] = useState("")
-  const [vidTitle, setVidTitle] = useState("")
+  const [vidChoice, setVidChoice] = useState([])
   const defaultVids = useState(defaultVideos)
 
   const SearchVideos = async (query = searchParam) => {
     try {
       let results = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${query}&key=${KEY}&fields=items(id,snippet(channelId,title,description,thumbnails))&part=snippet&type=video&maxResults=8`)
-      console.log('results',results)
       setVideos(results.data.items)
-      console.log('videos',videos)
     }
     catch (err) {
       console.log('error getting search results')
@@ -45,6 +41,18 @@ function App() {
     setSearchParam(searchParams);
     SearchVideos(searchParams);
 
+  }
+
+  function userChoice(vid) {
+    let choice = videos.filter((el) => {
+      if (el.id.videoId === vid.id.videoId) {
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    setVidChoice(vid)
   }
 
   return (
@@ -60,7 +68,8 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/search" element={<SearchPage videos={videos}/>} />
+        <Route path="/search" element={<SearchPage videos={videos} selection={userChoice}/>} />
+        <Route path="/video" element={<VideoPage pickedVid={vidChoice}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
