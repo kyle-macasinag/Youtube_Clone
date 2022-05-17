@@ -37,7 +37,7 @@ const Comment = (props) => {
         setDislikeTrue(!dislikeTrue)
     }
 
-    return(<div className='containter'>
+    return(<div className='container'>
         <h5>{props.user}</h5>
         <div>{props.comment}</div>
         <button 

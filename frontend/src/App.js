@@ -27,16 +27,31 @@ function App() {
   const [relatedVids, setRelatedVids] = useState([])
   const [vidChoice, setVidChoice] = useState([])
   const defaultVids = useState(defaultVideos)
+  const [comments, setComments] = useState([])
 
+  // Get the Video based on a user search
   const SearchVideos = async (query = searchParam) => {
     try {
       let results = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${query}&key=${KEY}&fields=items(id,snippet(channelId,title,description,thumbnails))&part=snippet&type=video&maxResults=8`)
       setVideos(results.data.items)
     }
     catch (err) {
-      console.log('error getting search results')
+      console.log('Error getting search results')
     }
   }
+
+  // Get the Comments for the Video
+  const getVideoComments = async (videoId) => {
+    try{
+      let results = await axios.get(`http://127.0.0.1:8000/api/comments/${videoId}/`);
+      setComments(results.data)
+    }
+    catch (err) {
+      console.log('Error getting video comments')
+    }
+  }
+
+  // update the state of the searchParams and search the videos for it
   const updateParams = (searchParams) => {
     setSearchParam(searchParams);
     SearchVideos(searchParams);
