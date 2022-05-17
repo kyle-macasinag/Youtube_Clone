@@ -7,7 +7,7 @@ const CustomButton = (props) => {
     function handleClick(event){
     if(event.target.id=="like"){
         if (buttonClass == "likeButton"){
-            setButtonClass(likeButtonActive);
+            setButtonClass("likeButtonActive");
             setButtonClass2("dislikeButton");
         }
         else{setButtonClass("likeButton");

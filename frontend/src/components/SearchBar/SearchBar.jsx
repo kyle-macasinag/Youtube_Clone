@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
-import { SearchVideos } from "../../utils/Search";
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const SearchBar = () => {
+const SearchBar = (props) => {
     const [searchParam, setSearchParam] = useState("")
+    const goToPage = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(SearchVideos(searchParam))
+        console.log(searchParam)
+        props.updateSearchParams(searchParam)
+        goToPage("/search")
     }
     return (
         <div className='container'>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form-group" onSubmit={handleSubmit}>
                 <input type="text" value={searchParam} onChange={(e) => setSearchParam(e.target.value)}/>
                 <button className='btn btn-primary'>Search</button>
             </form>

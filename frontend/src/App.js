@@ -2,6 +2,9 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import React, {useState} from "react";
+import axios from 'axios';
+import { KEY } from './utils/localKey';
+import { defaultVideos } from "./defaultVideos";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
@@ -25,22 +28,39 @@ function App() {
   const [videoId, setVideoId] = useState("")
   const [vidDescription, setVidDescription] = useState("")
   const [vidTitle, setVidTitle] = useState("")
+  const defaultVids = useState(defaultVideos)
 
+  const SearchVideos = async (query = searchParam) => {
+    try {
+      let results = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${query}&key=${KEY}&fields=items(id,snippet(channelId,title,description,thumbnails))&part=snippet&type=video&maxResults=8`)
+      console.log('results',results)
+      setVideos(results.data.items)
+      console.log('videos',videos)
+    }
+    catch (err) {
+      console.log('error getting search results')
+    }
+  }
+  const updateParams = (searchParams) => {
+    setSearchParam(searchParams);
+    SearchVideos(searchParams);
 
+  }
 
   return (
     <div>
       <Navbar />
-      <SearchBar />
+      <SearchBar updateSearchParams={updateParams}/>
       <Routes>
         <Route
           path="/"
           element={
             <PrivateRoute>
-              <HomePage />
+              <HomePage videos={defaultVids}/>
             </PrivateRoute>
           }
         />
+        <Route path="/search" element={<SearchPage videos={videos}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

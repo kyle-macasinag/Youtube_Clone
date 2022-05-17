@@ -7,9 +7,10 @@ const VideoCard = ({ id}) => {
             <div style={{ width: "12rem" }}>
                 <iframe id={id}/>
                 <div>
-                    {/*}
+                    
                 </div>
             </div>
         </div>
     )
 }
+export default VideoCard;

@@ -1,38 +1,38 @@
-// import React from "react";
-// import iframe from "./VideoPlayer";
-// import CustomButton from "./CustomButton";
-// import CommentForm from "./CommentForm";
-// import Comment from "./Comment";
-// //import displayVideos from RelatedVideos GOES HERE
-// import {useState} from "react";
+import React from "react";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import CustomButton from "../../components/CustomButton/CustomButton";
+import CommentForm from "../../components/Comments/CommentForm/CommentForm";
+import Comment from "../../components/Comments/Comment/Comment";
+import DisplayRelatedVids from "../../components/VideoPlayer/VideoPlayer"
+import {useState} from "react";
 
-// const DisplayVideo = ({ID, Title, Description, RelatedVideos, setRelatedVideos}) => {
-//     const[Posts, setPosts] = useState([]);
-//     const header = Comments
-//     let count = 0
+const DisplayVideo = ({ID, Title, Description, RelatedVideos, setRelatedVideos}) => {
+    const[Posts, setComments] = useState([]);
+    const header = Comment
 
-// function createNewComment(Comment){
-//     let tempComment = [comment, ...Comment];
-//     setComments(tempComment);
-// }
-// return (
-//     <div>
-//         <div className="VideoAndTitle">
-//             <div className="Video">
-//                 <iframe id={ID} />
-//             </div>
-//             <div className = "Placeholder"> 
+function createNewComment(Comment){
+    let tempComment = [Comment, ...Comment];
+    setComments(tempComment);
+}
+return (
+    <div>
+        <div className="VideoAndTitle">
+            <div className="Video">
+                <iframe id={ID} />
+            </div>
+            <div className = "ButtonAndTitle">
+                <h2>{Title}</h2><CustomButton/>
+            </div>
+        </div>
+        <h5>{Description}</h5>
+        <div className="Comments">
+            <createNewComment createNewComment={createNewComment}/>
+            <p>{header}</p>
+            <Comment parentComments={Comment}/>
+        </div>
+    </div>
+    
+)
+}
 
-//             </div>
-//         </div>
-//         <h5>{Description}</h5>
-//         <div className="Comments">
-//             <createNewComment createNewComment={createNewComment} count = {count}/>
-//             <p>{count} {header}</p>
-//             <Comment parentComments={Comments} count = {count}/>
-//         </div>
-//     </div>
-// )
-// }
-
-// export default DisplayVideo;
+export default DisplayVideo;

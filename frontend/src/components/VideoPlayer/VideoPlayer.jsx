@@ -3,11 +3,9 @@ import { useParams } from "react-router-dom";
 
 const VideoPlayer = (props) => {
 
-    const {videoId} = useParams()
-
     return (
         <div>
-            <iframe src={`https://www.youtube.com/embed/${videoId}`}></iframe>
+            <iframe src={`https://www.youtube.com/embed/${props.parentVid}`}></iframe>
         </div>
     )
 };
