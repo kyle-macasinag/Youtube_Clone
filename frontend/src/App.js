@@ -45,6 +45,7 @@ function App() {
     try{
       let results = await axios.get(`http://127.0.0.1:8000/api/comments/${videoId}/`);
       setComments(results.data)
+      console.log(results.data)
     }
     catch (err) {
       console.log('Error getting video comments')

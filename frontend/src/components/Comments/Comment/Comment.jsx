@@ -1,54 +1,73 @@
 import React, { useState, useEffect } from 'react';
+import CustomButton from '../../CustomButton/CustomButton';
+import axios from 'axios';
+import useAuth from "../../../hooks/useAuth";
 
 const Comment = (props) => {
 
-    const [like, setLike] = useState('Like')
-    const [dislike, setDislike] = useState('Dislike')
-    const [likeTrue, setLikeTrue] = useState(false);
-    const [dislikeTrue, setDislikeTrue] = useState(false);
+    const [user, token] = useAuth();
 
-    useEffect(() => {
-        if(likeTrue){
-            setLike('Liked')
-            setDislikeTrue(false)
-        }
-        else{
-            setLike('Like')
-        }
-    }, [likeTrue]);
-
-    useEffect(() => {
-        if(dislikeTrue){
-            setDislike('Disliked')
-            setLikeTrue(false)
-        }
-        else{
-            setDislike('Dislike')
-        }
-    }, [dislikeTrue]);
+    const [like, setLike] = useState(false)
+    const [dislike, setDislike] = useState(false)
     
-    function likePost(){
-       setLikeTrue(!likeTrue)
+    async function likeDislike(){
+        let body = {}
+        if (like === true){
+            body = {
+                user: props.user,
+                video_id: props.videoId,
+                text: props.comment,
+                likes: props.likes +1,
+                dislikes: props.dislikes
+            }
+            try{
+                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.id}/update/`, body, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }})
+            }
+            catch(err){
+                console.log('Error liking a post')
+            }
+            }
+        else if (dislike === true){
+            body = {
+                user: props.user,
+                video_id: props.videoId,
+                text: props.comment,
+                likes: props.likes,
+                dislikes: props.dislikes + 1
+            }
+            try{
+                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.id}/update/`, body, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }})
+            }
+            catch(err){
+                console.log('Error disliking a post')
+            }
+        }
+        
     }
-
-    function dislikePost(){
-        setDislikeTrue(!dislikeTrue)
-    }
+    useEffect(()=>{
+        likeDislike()
+    }, [like, dislike])
 
     return(<div className='container'>
         <h5>{props.user}</h5>
         <div>{props.comment}</div>
         <button 
-            className={likeTrue ? 'btn btn-primary': 'btn btn-outline-sucess'} 
-            onClick={() => {likePost()}}>
-                {props.likes}
+            className="btn btn-primary"
+            onClick={() => setLike(true)}>
+                Like {props.likes}
         </button>
         <button
-            className={dislikeTrue ? 'btn btn-danger': 'btn btn-outline-danger'}
-            onClick={() => {dislikePost()}}>
-                {props.dislikes}
+            className="btn btn-primary"
+            onClick={() => setDislike(true)}>
+                Dislike {props.dislikes}
         </button>
     </div>)
 }
 
-export default Comment
+export default Comment;

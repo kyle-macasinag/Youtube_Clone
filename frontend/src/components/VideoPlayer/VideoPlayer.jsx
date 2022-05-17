@@ -5,7 +5,7 @@ const VideoPlayer = (props) => {
 
     return (
         <div>
-            <iframe src={`https://www.youtube.com/embed/${props.parentVid}`} width="500" height="500"></iframe>
+            <iframe src={`https://www.youtube-nocookie.com/embed/${props.parentVid}`} width="500" height="500"></iframe>
         </div>
     )
 };

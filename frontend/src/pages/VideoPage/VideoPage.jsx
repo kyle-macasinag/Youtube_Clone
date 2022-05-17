@@ -1,7 +1,7 @@
 import React from "react";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 //import DisplayRelatedVids from "../../components/RelatedVideos/RelatedVidDisplay";
-import CommentForm from "../../components/Comments/CommentForm/CommentForm";
+//import CommentForm from "../../components/Comments/CommentForm/CommentForm";
 import CommentList from "../../components/Comments/CommentList/CommentList";
 
 
