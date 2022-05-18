@@ -17,6 +17,7 @@ def reply_details(request, comment_id):
     elif request.method == "POST":
         data = request.data
         data['user'] = request.user.id
+        data['comment'] = comment_id
         serializer = ReplySerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
