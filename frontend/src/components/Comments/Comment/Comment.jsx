@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CustomButton from '../../CustomButton/CustomButton';
 import axios from 'axios';
 import useAuth from "../../../hooks/useAuth";
 
@@ -14,17 +13,18 @@ const Comment = (props) => {
         let body = {}
         if (like === true){
             body = {
-                user: props.user,
-                video_id: props.videoId,
-                text: props.comment,
-                likes: props.likes +1,
-                dislikes: props.dislikes
+                user: user.id,
+                video_id: props.comment.video_id,
+                text: props.comment.text,
+                likes: props.comment.likes +1,
+                dislikes: props.comment.dislikes
             }
             try{
-                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.id}/update/`, body, {
+                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.comment.id}/update/`, body, {
                     headers: {
                         Authorization: "Bearer " + token
                     }})
+                console.log(result)
             }
             catch(err){
                 console.log('Error liking a post')
@@ -32,40 +32,41 @@ const Comment = (props) => {
             }
         else if (dislike === true){
             body = {
-                user: props.user,
-                video_id: props.videoId,
-                text: props.comment,
-                likes: props.likes,
-                dislikes: props.dislikes + 1
+                user: user.id,
+                video_id: props.comment.video_id,
+                text: props.comment.text,
+                likes: props.comment.likes,
+                dislikes: props.comment.dislikes + 1
             }
             try{
-                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.id}/update/`, body, {
+                let result = await axios.put(`http://127.0.0.1:8000/api/comments/${props.comment.id}/update/`, body, {
                     headers: {
                         Authorization: "Bearer " + token
                     }})
+                console.log(result)
             }
             catch(err){
                 console.log('Error disliking a post')
             }
         }
-        
+        if (Response.status === 200){
+            await props.getComments(props.vidId)
+        }  
     }
     useEffect(()=>{
-        likeDislike()
-    }, [like, dislike])
+        likeDislike(); console.log('useEffect in Comment ran')
+    }, [like, dislike]);
 
     return(<div className='container'>
-        <h5>{props.user}</h5>
-        <div>{props.comment}</div>
         <button 
             className="btn btn-primary"
             onClick={() => setLike(true)}>
-                Like {props.likes}
+                Like {props.comment.likes}
         </button>
         <button
-            className="btn btn-primary"
+            className="btn btn-primary text-align=right"
             onClick={() => setDislike(true)}>
-                Dislike {props.dislikes}
+                Dislike {props.comment.dislikes}
         </button>
     </div>)
 }

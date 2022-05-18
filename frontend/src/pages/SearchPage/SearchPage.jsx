@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import axios from 'axios';
+import { CardGroup, Card, Row, Col } from "react-bootstrap";
 
 const SearchPage = (props) => {
 
@@ -14,17 +15,24 @@ const SearchPage = (props) => {
     }
     
     return (
-        <div className="container">
+        <CardGroup>
+
             {props.videos.map((video, index) =>{
                 return (
-                    <div className="card" key={index}>
-                        <h4>{video.snippet.title}</h4>
-                        <img src={video.snippet.thumbnails.high.url}/>
-                        <a href="#" onClick={()=>{handleSubmit(video)}}>Play</a>
+                    <div key="key={index}">
+                    <Card text="light" bg="dark" style={{width: "60%", height: "60%", borderBlock:"1rem", textAlign:"center"}}>
+                    <Card.Body>
+                        <Card.Title>{video.snippet.title}</Card.Title>
+                        <Card.Img varient="center"src={video.snippet.thumbnails.high.url}/>
+                        <Card.Text><a href="#" onClick={()=>{handleSubmit(video)}}>Play</a></Card.Text>
+                    </Card.Body>
+                    </Card>
                     </div>
                 )
             })}
-        </div>
+
+
+        </CardGroup>
     )
 }
 export default SearchPage;

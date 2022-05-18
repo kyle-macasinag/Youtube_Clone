@@ -1,30 +1,31 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import Card from 'react-bootstrap/Card';
-import { Col, Row} from "react-bootstrap";
-import { defaultVideos } from "../../defaultVideos";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import { CardGroup } from "react-bootstrap";
 
 const HomePage = (props) => {
 
   
   const [user, token] = useAuth();
-  // const [cars, setCars] = useState([]);//SHOULD IT BE MODIFIED TO VIDEOS?
+
 
   return (
-    <div className="container-flex">
-
+    <CardGroup>
+      
     {Array.from({ length: 4 })}{props.videos[0] && props.videos[0].items.map((video) => (
     <div key ={video.id.videoId}>
-    <h4>{video.snippet.title}</h4>
-    <VideoPlayer parentVid={video.id.videoId}/>
+    <Card text="light" bg="dark" style={{width: "25rem", padding:"1rem", border:"5rem", paddingLeft:"4rem"}}>
+    <Card.Body>
+    <Card.Title><h4>{video.snippet.title}</h4></Card.Title>
+    <Card.Text><VideoPlayer parentVid={video.id.videoId} width="100%" height="300px"/></Card.Text>
+    </Card.Body>
+    </Card>
     </div>
   ))}
-
-    </div>
+    </CardGroup>
   );
+
 };
 
 export default HomePage;

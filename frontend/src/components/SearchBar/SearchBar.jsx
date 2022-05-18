@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import './SearchBar.css'
 const SearchBar = (props) => {
     const [searchParam, setSearchParam] = useState("")
     const goToPage = useNavigate();

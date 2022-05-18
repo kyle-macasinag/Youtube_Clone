@@ -19,7 +19,6 @@ const CommentForm = (props) => {
         defaultData,
         addNewComment
     );
-    const nav = useNavigate();
 
     async function addNewComment(){
         try{
@@ -28,7 +27,6 @@ const CommentForm = (props) => {
                     Authorization: "Bearer " + token
                 }
             })
-        nav("/")
         }
         catch (err) {
             console.log('Error posting comment')
@@ -36,9 +34,9 @@ const CommentForm = (props) => {
     }
     return (
         <div className = "container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form align-left" onSubmit={handleSubmit}>
                 <label>
-                    Comment: [" "]
+                    Leave a Comment:
                     <input type="text" name="text" value={commentData.text} onChange={handleChange}/>
                 </label>
                 <button className="btn btn-primary">Submit</button>

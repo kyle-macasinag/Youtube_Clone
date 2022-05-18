@@ -45,12 +45,22 @@ function App() {
     try{
       let results = await axios.get(`http://127.0.0.1:8000/api/comments/${videoId}/`);
       setComments(results.data)
-      console.log(results.data)
     }
     catch (err) {
       console.log('Error getting video comments')
     }
   }
+
+  // Get Related Videos
+   const getRelated = async (videoId) => {
+    try{
+      let results = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoId}&type=video&key=${KEY}`)
+      setRelatedVids(results.data)
+      }
+    catch (err) {
+      console.log(err.message)
+    }
+   }
 
   // update the state of the searchParams and search the videos for it
   const updateParams = (searchParams) => {
@@ -59,6 +69,7 @@ function App() {
 
   }
 
+  // set the user picked video 
   function userChoice(vid) {
     let choice = videos.filter((el) => {
       if (el.id.videoId === vid.id.videoId) {
@@ -73,20 +84,32 @@ function App() {
   }
 
   return (
-    <div>
-      <Navbar />
+    <div class="p-3 mb-2 bg-dark text-white">
+      <Navbar/>
       <SearchBar updateSearchParams={updateParams}/>
       <Routes>
         <Route
           path="/"
           element={
-            <PrivateRoute>
               <HomePage videos={defaultVids}/>
-            </PrivateRoute>
           }
         />
-        <Route path="/search" element={<SearchPage videos={videos} selection={userChoice}/>} />
-        <Route path="/video" element={<VideoPage pickedVid={vidChoice} comment={comments}/>} />
+        <Route path="/search" element={
+        <SearchPage
+         videos={videos}
+         selection={userChoice}
+         />}
+         />
+        <Route path="/video" element={
+        <VideoPage
+         pickedVid={vidChoice}
+         comment={comments}
+         getComments={getVideoComments}
+         getRelated={getRelated}
+         pickVideo={userChoice}
+         videos={videos}
+         />} 
+         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
